@@ -141,6 +141,7 @@ const CategoryContainer = () => {
                   <EditCategory
                       itemData={itemData}
                       setIsModalOpen={setIsEditModalOpen}
+                      refetch={refetch}
                   />
               </Modal>
 

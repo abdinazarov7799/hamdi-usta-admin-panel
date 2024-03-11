@@ -3,9 +3,9 @@ import {URLS} from "../../../constants/url";
 import usePaginateQuery from "../../../hooks/api/usePaginateQuery";
 import React, {useState} from "react";
 import {useTranslation} from "react-i18next";
-import {Col, Input, Modal, Pagination, Row, Table} from "antd";
+import {Button, Col, Input, Modal, Pagination, Popconfirm, Row, Space, Table} from "antd";
 import {find, get, isEqual} from "lodash";
-import {SearchOutlined} from "@ant-design/icons";
+import {DeleteOutlined, EditOutlined, SearchOutlined} from "@ant-design/icons";
 import LanguageForm from "../components/LanguageForm";
 import Container from "../../../components/Container.jsx";
 
@@ -71,13 +71,16 @@ const TranslationContainer = () => {
             }
         },
         {
-            title: t("En"),
-            key: "En",
-            width: 400,
-            render: (props, data, index) => {
-                return <>{get(findLang(get(data, "languageSourcePs", []), "EN"), "translation")}</>
-            }
-        },
+            title: t("Edit"),
+            width: 120,
+            fixed: 'right',
+            render: (props, data, index) => (
+                <Button icon={<EditOutlined />} onClick={() => {
+                    showModal();
+                    setSelected(data)
+                }} />
+            )
+        }
     ];
 
     return(
@@ -95,14 +98,7 @@ const TranslationContainer = () => {
                     dataSource={get(data,'data.data.content',[])}
                     bordered
                     loading={isLoading}
-                    onRow={(record) => {
-                        return {
-                            onClick: () => setSelected(record),
-                            onDoubleClick: showModal,
-                        };
-                    }}
                     size="small"
-                    style={{cursor:"pointer"}}
                     pagination={false}
                 />
             <Modal title={t("Add Translations")} open={isModalOpen} onCancel={handleCancel} footer={null}>

@@ -3,8 +3,9 @@ import {useTranslation} from "react-i18next";
 import usePostQuery from "../../../hooks/api/usePostQuery.js";
 import {KEYS} from "../../../constants/key.js";
 import {URLS} from "../../../constants/url.js";
-import {Button, Checkbox, Form, Input, InputNumber} from "antd";
-import TextArea from "antd/es/input/TextArea";
+import {Button, Checkbox, Form, Input, InputNumber, Upload} from "antd";
+const { TextArea } = Input;
+const { Dragger } = Upload;
 
 const CreateCategory = ({setIsModalOpen,refetch}) => {
     const { t } = useTranslation();

@@ -14,15 +14,14 @@ const LanguageForm = ({data,handleCancel}) => {
         listKeyId: KEYS.translations_list,
         hideSuccessToast: true,
     });
+    console.log(data)
     const onFinish = (values) => {
         mutate(
-            { url: `${URLS.add_translations}`, attributes: {
+            { url: `${URLS.translations_edit}`, attributes: {
                 id: get(data,'id'),
-                    translations: {
-                        Uz: get(values,'Uz'),
-                        En: get(values,'En'),
-                        Ru: get(values,'Ru'),
-                    }
+                    key: get(data,'key'),
+                    textUz: get(values,'UZ'),
+                    textRu: get(values,'RU'),
                 }},
             {
                 onSuccess: () => {
@@ -48,19 +47,14 @@ const LanguageForm = ({data,handleCancel}) => {
                 onFinish={onFinish}
                 autoComplete="off"
                 initialValues={{
-                    key: get(data, "text"),
-                    Uz: get(
-                        findLang(get(data, "languageSourcePs", []), "Uz"),
+                    key: get(data, "key"),
+                    UZ: get(
+                        findLang(get(data, "languageSourcePs", []), "UZ"),
                         "translation",
                         ""
                     ),
-                    En: get(
-                        findLang(get(data, "languageSourcePs", []), "En"),
-                        "translation",
-                        ""
-                    ),
-                    Ru: get(
-                        findLang(get(data, "languageSourcePs", []), "Ru"),
+                    RU: get(
+                        findLang(get(data, "languageSourcePs", []), "RU"),
                         "translation",
                         ""
                     )
@@ -75,21 +69,14 @@ const LanguageForm = ({data,handleCancel}) => {
 
                 <Form.Item
                     label={t("Uzbek")}
-                    name="Uz"
-                >
-                    <TextArea allowClear/>
-                </Form.Item>
-
-                <Form.Item
-                    label={t("English")}
-                    name="En"
+                    name="UZ"
                 >
                     <TextArea allowClear/>
                 </Form.Item>
 
                 <Form.Item
                     label={t("Rus")}
-                    name="Ru"
+                    name="RU"
                 >
                     <TextArea allowClear/>
                 </Form.Item>

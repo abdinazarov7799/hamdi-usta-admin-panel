@@ -1,7 +1,6 @@
 import {Button, Col, Dropdown, Image, Row, Space, Switch, theme} from "antd";
 import logo from "../../assets/images/logo.svg";
 import logoDark from "../../assets/images/logoDark.svg";
-import en from '../../assets/images/en.png'
 import ru from '../../assets/images/ru.svg'
 import uz from '../../assets/images/uz.png'
 import React from "react";
@@ -35,10 +34,6 @@ const DashboardHeader = () => {
 
     let items = [
         {
-            key: "En",
-            icon: <Image src={en} onClick={() => changeLang("En")} preview={false} width={25} height={25} alt={"english flag image"} />,
-        },
-        {
             key: "Ru",
             icon: <Image src={ru} preview={false} onClick={() => changeLang("Ru")}  width={25} height={25} alt={"russian flag image"} />,
         },
@@ -46,8 +41,7 @@ const DashboardHeader = () => {
             key: "Uz",
             icon: <Image src={uz} preview={false} onClick={() => changeLang("Uz")} width={25} height={25} alt={"uzbek flag image"} />,
         },
-    ];
-    items = items.filter(item => !isEqual(get(item,"key"),lang));
+    ].filter(item => !isEqual(get(item,"key"),lang));;
     const logout = () => {
         Swal.fire({
             title: t("Are you sure you want to exit??"),
@@ -106,7 +100,7 @@ const DashboardHeader = () => {
                           overlayClassName={"language-dropdown"}
                           over
                       >
-                          <Image src={isEqual(lang,"Ru") ? ru : isEqual(lang,"En") ? en : uz} preview={false} width={30} height={30} alt={"flag image"} />
+                          <Image src={isEqual(lang,"Ru") ? ru : uz} preview={false} width={30} height={30} alt={"flag image"} />
                       </Dropdown>
                       <Button
                           icon={<LogoutOutlined />}
