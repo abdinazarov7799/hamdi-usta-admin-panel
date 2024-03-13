@@ -20,16 +20,20 @@ const DashboardSidebar = () => {
             key: "/products",
         },
         {
-            label: t("Branches"),
-            key: "/branches",
-        },
-        {
             label: t("Banner"),
             key: "/banner",
         },
         {
+            label: t("Branches"),
+            key: "/branches",
+        },
+        {
             label: t("Measuries"),
             key: "/measuries",
+        },
+        {
+            label: t("Variations"),
+            key: "/variations",
         },
         {
             label: t("Constants"),

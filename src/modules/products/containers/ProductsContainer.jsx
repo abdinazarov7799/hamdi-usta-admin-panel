@@ -7,7 +7,7 @@ import usePaginateQuery from "../../../hooks/api/usePaginateQuery.js";
 import useDeleteQuery from "../../../hooks/api/useDeleteQuery.js";
 import {Button, Input, Modal, Pagination, Popconfirm, Row, Space, Switch, Table, Typography} from "antd";
 import Container from "../../../components/Container.jsx";
-import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
+import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
 import CreateEditProduct from "../components/CreateEditProduct.jsx";
 const { Link } = Typography;
 const ProductsContainer = () => {
@@ -127,6 +127,7 @@ const ProductsContainer = () => {
                       allowClear
                   />
                   <Button
+                      icon={<PlusOutlined />}
                       type={"primary"}
                       onClick={() => setIsCreateModalOpen(true)}
                   >

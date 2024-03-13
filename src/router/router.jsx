@@ -24,6 +24,9 @@ import TranslationPage from "../modules/translation/pages/TranslationPage.jsx";
 import OverlayLoader from "../components/OverlayLoader.jsx";
 import ProductsPage from "../modules/products/pages/ProductsPage.jsx";
 import BannerPage from "../modules/banner/pages/BannerPage.jsx";
+import ConstantsPage from "../modules/constants/pages/ConstantsPage.jsx";
+import MeasurePage from "../modules/measure/pages/MeasurePage.jsx";
+import VariationPage from "../modules/variation/pages/VariationPage.jsx";
 // PAGES
 
 
@@ -48,6 +51,21 @@ const Router = ({ ...rest }) => {
                   path={"/banner"}
                   index
                   element={<BannerPage />}
+              />
+              <Route
+                  path={"/constants"}
+                  index
+                  element={<ConstantsPage />}
+              />
+              <Route
+                  path={"/measuries"}
+                  index
+                  element={<MeasurePage />}
+              />
+              <Route
+                  path={"/variations"}
+                  index
+                  element={<VariationPage />}
               />
               <Route
                   path={"/translations"}

@@ -5,7 +5,7 @@ import {URLS} from "../../../constants/url.js";
 import useDeleteQuery from "../../../hooks/api/useDeleteQuery.js";
 import {get} from "lodash";
 import {Button, Modal, Pagination, Popconfirm, Row, Space, Table, Typography} from "antd";
-import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
+import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
 import {useTranslation} from "react-i18next";
 import Container from "../../../components/Container.jsx";
 import CreateBanner from "../components/CreateBanner.jsx";
@@ -73,6 +73,7 @@ const BannerContainer = () => {
             <Space direction={"vertical"} style={{width: "100%"}} size={"middle"}>
                 <Row>
                     <Button
+                        icon={<PlusOutlined />}
                         type={"primary"}
                         onClick={() => setIsModalOpen(true)}
                     >

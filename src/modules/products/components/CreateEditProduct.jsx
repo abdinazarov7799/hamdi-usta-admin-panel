@@ -148,7 +148,10 @@ const CreateEditProduct = ({itemData,setIsModalOpen,refetch}) => {
                     number: get(itemData,'number')
                 }}
             >
-                <Form.Item>
+                <Form.Item
+                    label={t("Category")}
+                    name="categoryId"
+                    rules={[{required: true,}]}>
                     <Select
                         showSearch
                         placeholder={t("Category")}
