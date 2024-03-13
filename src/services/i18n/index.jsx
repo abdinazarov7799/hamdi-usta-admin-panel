@@ -17,7 +17,7 @@ const i18config = i18n
             lookupLocalStorage: "lang",
         },
         react: {
-            useSuspense: true,
+            useSuspense: false,
             wait: true,
         },
         backend: {

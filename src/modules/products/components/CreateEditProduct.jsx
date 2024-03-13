@@ -15,7 +15,7 @@ import usePutQuery from "../../../hooks/api/usePutQuery.js";
 const CreateEditProduct = ({itemData,setIsModalOpen,refetch}) => {
     const { t } = useTranslation();
     const [isActive, setIsActive] = useState(get(itemData,'active',true));
-    const [imageUrl,setImgUrl] = useState('');
+    const [imageUrl,setImgUrl] = useState(get(itemData,'imageUrl'));
     const [categoryId,setCategoryId] = useState(null);
     const [searchCategory,setSearchCategory] = useState(null);
     const { mutate, isLoading } = usePostQuery({
@@ -38,7 +38,6 @@ const CreateEditProduct = ({itemData,setIsModalOpen,refetch}) => {
             }
         }
     })
-
     const onFinish = (values) => {
         const formData = {
             ...values,

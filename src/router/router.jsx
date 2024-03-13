@@ -23,6 +23,7 @@ import CategoryPage from "../modules/category/pages/CategoryPage.jsx";
 import TranslationPage from "../modules/translation/pages/TranslationPage.jsx";
 import OverlayLoader from "../components/OverlayLoader.jsx";
 import ProductsPage from "../modules/products/pages/ProductsPage.jsx";
+import BannerPage from "../modules/banner/pages/BannerPage.jsx";
 // PAGES
 
 
@@ -44,7 +45,13 @@ const Router = ({ ...rest }) => {
                   element={<ProductsPage />}
               />
               <Route
+                  path={"/banner"}
+                  index
+                  element={<BannerPage />}
+              />
+              <Route
                   path={"/translations"}
+                  index
                   element={<TranslationPage />}
               />
               <Route

@@ -1,23 +1,21 @@
 import React from 'react';
 import {theme} from "antd";
-import styled from "styled-components";
 
 const Container = ({children}) => {
     const {
         token: { colorBgContainer },
     } = theme.useToken();
 
-    const StyledContainer = styled.div`
-        margin: 0 auto;
-        padding: 16px;
-        border-radius: 5px;
-        width: 100%;
-        background-color: ${colorBgContainer};
-`;
     return (
-        <StyledContainer>
+        <div style={{
+            margin: "0 auto",
+            padding: 16,
+            borderRadius: 5,
+            width: "100%",
+            backgroundColor: colorBgContainer,
+        }}>
             {children}
-        </StyledContainer>
+        </div>
     );
 };
 

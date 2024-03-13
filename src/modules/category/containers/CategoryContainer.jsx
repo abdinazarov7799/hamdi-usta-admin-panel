@@ -41,28 +41,28 @@ const CategoryContainer = () => {
     }
     const columns = [
         {
-            title: "ID",
+            title: t("ID"),
             dataIndex: "id",
             width: 30
         },
         {
-            title: "nameUz",
+            title: t("nameUz"),
             dataIndex: "nameUz"
         },
         {
-            title: "nameRu",
+            title: t("nameRu"),
             dataIndex: "nameRu"
         },
         {
-            title: "descriptionUz",
+            title: t("descriptionUz"),
             dataIndex: "descriptionUz"
         },
         {
-            title: "descriptionRu",
+            title: t("descriptionRu"),
             dataIndex: "descriptionRu"
         },
         {
-            title: "Image",
+            title: t("Image"),
             dataIndex: "imageUrl",
             width: 50,
             render: (props, data, index) => (
@@ -70,19 +70,19 @@ const CategoryContainer = () => {
             )
         },
         {
-            title: "number",
+            title: t("Order"),
             dataIndex: "number",
             width: 70
         },
         {
-            title: "active",
+            title: t("is active"),
             dataIndex: "active",
             render: (props,data,index) => (
                 <Switch disabled checked={get(data,'active')} />
             )
         },
         {
-            title: "edit / delete",
+            title: t("Edit / Delete"),
             width: 120,
             fixed: 'right',
             render: (props, data, index) => (

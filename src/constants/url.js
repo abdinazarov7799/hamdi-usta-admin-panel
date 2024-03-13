@@ -24,4 +24,7 @@ export const URLS = {
     translations_list: '/api/lang/all',
     translations_edit: '/api/lang/create-edit',
     image_upload: '/api/images/upload',
+    banner_get_all: '/api/banner/get-all',
+    banner_delete: '/api/banner/delete',
+    banner_upload: '/api/banner/upload',
 };

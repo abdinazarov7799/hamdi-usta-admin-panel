@@ -1,59 +1,36 @@
 import React, {useState} from 'react';
-import {useTranslation} from "react-i18next";
-import usePostQuery from "../../../hooks/api/usePostQuery.js";
-import {KEYS} from "../../../constants/key.js";
 import {URLS} from "../../../constants/url.js";
-import {Button, Checkbox, Form, Input, InputNumber, Upload} from "antd";
+import {Button, Form, InputNumber, Upload} from "antd";
 import ImgCrop from "antd-img-crop";
 import {InboxOutlined} from "@ant-design/icons";
-import {get} from "lodash";
-import usePutQuery from "../../../hooks/api/usePutQuery.js";
-const { TextArea } = Input;
-const { Dragger } = Upload;
-
-const CreateEditCategory = ({itemData,setIsModalOpen,refetch}) => {
-    const { t } = useTranslation();
-    const [isActive, setIsActive] = useState(get(itemData,'active',true));
-    const [imageUrl,setImgUrl] = useState(get(itemData,'imageUrl'));
+import usePostQuery from "../../../hooks/api/usePostQuery.js";
+import {KEYS} from "../../../constants/key.js";
+import {useTranslation} from "react-i18next";
+const {Dragger} = Upload;
+const CreateBanner = ({setIsModalOpen,refetch}) => {
+    const [imageUrl,setImgUrl] = useState('');
+    const {t} = useTranslation();
     const { mutate, isLoading } = usePostQuery({
-        listKeyId: KEYS.category_get_all,
-    });
-    const { mutate:mutateEdit, isLoading:isLoadingEdit } = usePutQuery({
-        listKeyId: KEYS.category_get_all,
-        hideSuccessToast: false
+        listKeyId: KEYS.banner_get_all,
     });
     const { mutate:UploadImage } = usePostQuery({
-            hideSuccessToast: true
+        hideSuccessToast: true
     });
     const onFinish = (values) => {
         const formData = {
             ...values,
-            active: isActive,
             imageUrl,
         }
-        if (itemData) {
-            mutateEdit(
-                { url: `${URLS.category_edit}/${get(itemData,'id')}`, attributes: formData },
-                {
-                    onSuccess: () => {
-                        setIsModalOpen(false);
-                        refetch()
-                    },
-                }
-            );
-        }else {
-            mutate(
-                { url: URLS.category_add, attributes: formData },
-                {
-                    onSuccess: () => {
-                        setIsModalOpen(false);
-                        refetch()
-                    },
-                }
-            );
-        }
+        mutate(
+            { url: URLS.banner_upload, attributes: formData },
+            {
+                onSuccess: () => {
+                    setIsModalOpen(false);
+                    refetch()
+                },
+            }
+        );
     };
-
     const customRequest = async (options) => {
         const { file, onSuccess, onError } = options;
 
@@ -66,7 +43,7 @@ const CreateEditCategory = ({itemData,setIsModalOpen,refetch}) => {
             img.onload = () => {
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
-                const maxSize = 400;
+                const maxSize = 500;
                 let width = img.width;
                 let height = img.height;
 
@@ -115,7 +92,7 @@ const CreateEditCategory = ({itemData,setIsModalOpen,refetch}) => {
                         );
                     },
                     'image/webp',
-                    0.5 // 50% compress
+                    0.8
                 );
             };
         };
@@ -126,46 +103,7 @@ const CreateEditCategory = ({itemData,setIsModalOpen,refetch}) => {
                 onFinish={onFinish}
                 autoComplete="off"
                 layout={"vertical"}
-                initialValues={{
-                    nameUz: get(itemData,'nameUz'),
-                    nameRu: get(itemData,'nameRu'),
-                    descriptionUz: get(itemData,'descriptionUz'),
-                    descriptionRu: get(itemData,'descriptionRu'),
-                    number: get(itemData,'number')
-                }}
             >
-                <Form.Item
-                    label={t("nameUz")}
-                    name="nameUz"
-                    rules={[{required: true,}]}
-                >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item
-                    label={t("nameRu")}
-                    name="nameRu"
-                    rules={[{required: true,}]}
-                >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item
-                    label={t("descriptionUz")}
-                    name="descriptionUz"
-                    rules={[{required: true,}]}
-                >
-                    <TextArea />
-                </Form.Item>
-
-                <Form.Item
-                    label={t("descriptionRu")}
-                    name="descriptionRu"
-                    rules={[{required: true,}]}
-                >
-                    <TextArea />
-                </Form.Item>
-
                 <Form.Item
                     label={t("Order")}
                     name="number"
@@ -175,7 +113,7 @@ const CreateEditCategory = ({itemData,setIsModalOpen,refetch}) => {
                 </Form.Item>
 
                 <Form.Item>
-                    <ImgCrop quality={0.5} aspect={400/400}>
+                    <ImgCrop quality={0.8} aspect={500/500}>
                         <Dragger maxCount={1} multiple={false} accept={".jpg,.png,jpeg,svg"} customRequest={customRequest}>
                             <p className="ant-upload-drag-icon">
                                 <InboxOutlined />
@@ -185,16 +123,9 @@ const CreateEditCategory = ({itemData,setIsModalOpen,refetch}) => {
                     </ImgCrop>
                 </Form.Item>
 
-                <Form.Item
-                    name="active"
-                    valuePropName="active"
-                >
-                    <Checkbox checked={isActive} onChange={(e) => setIsActive(e.target.checked)}>{t("is Active")}</Checkbox>
-                </Form.Item>
-
                 <Form.Item>
-                    <Button block type="primary" htmlType="submit" loading={isLoading || isLoadingEdit}>
-                        {itemData ? t("Edit") : t("Create")}
+                    <Button block type="primary" htmlType="submit" loading={isLoading}>
+                        {t("Create")}
                     </Button>
                 </Form.Item>
             </Form>
@@ -202,4 +133,4 @@ const CreateEditCategory = ({itemData,setIsModalOpen,refetch}) => {
     );
 };
 
-export default CreateEditCategory;
+export default CreateBanner;
