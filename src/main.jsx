@@ -7,7 +7,7 @@ import i18n from "./services/i18n";
 import OverlayLoader from "./components/OverlayLoader.jsx";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <Suspense fallback={<OverlayLoader />}>
+    <Suspense fallback={<OverlayLoader/>}>
         <Query>
             <Theme>
                 <Router/>

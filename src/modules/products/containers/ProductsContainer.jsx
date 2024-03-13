@@ -5,12 +5,11 @@ import {KEYS} from "../../../constants/key.js";
 import {URLS} from "../../../constants/url.js";
 import usePaginateQuery from "../../../hooks/api/usePaginateQuery.js";
 import useDeleteQuery from "../../../hooks/api/useDeleteQuery.js";
-import {Button, Input, Modal, Pagination, Popconfirm, Row, Space, Switch, Table} from "antd";
+import {Button, Input, Modal, Pagination, Popconfirm, Row, Space, Switch, Table, Typography} from "antd";
 import Container from "../../../components/Container.jsx";
 import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
-import CreateProduct from "../components/CreateProduct.jsx";
-import EditProduct from "../components/EditProduct.jsx";
-
+import CreateEditProduct from "../components/CreateEditProduct.jsx";
+const { Link } = Typography;
 const ProductsContainer = () => {
     const { t } = useTranslation();
     const [page, setPage] = useState(0);
@@ -61,6 +60,26 @@ const ProductsContainer = () => {
         {
             title: "descriptionRu",
             dataIndex: "descriptionRu"
+        },
+        {
+            title: "Category name uz",
+            render: (props, data, index) => {
+                return get(data,'category.nameUz')
+            }
+        },
+        {
+            title: "Category name uz",
+            render: (props, data, index) => {
+                return get(data,'category.nameRu')
+            }
+        },
+        {
+            title: "Image",
+            dataIndex: "imageUrl",
+            width: 50,
+            render: (props, data, index) => (
+                <Link href={get(data,'imageUrl')} target="_blank">{t("Image")}</Link>
+            )
         },
         {
             title: "number",
@@ -119,7 +138,7 @@ const ProductsContainer = () => {
                       onCancel={() => setIsCreateModalOpen(false)}
                       footer={null}
                   >
-                      <CreateProduct setIsModalOpen={setIsCreateModalOpen} refetch={refetch}/>
+                      <CreateEditProduct setIsModalOpen={setIsCreateModalOpen} refetch={refetch}/>
                   </Modal>
               </Space>
 
@@ -138,9 +157,10 @@ const ProductsContainer = () => {
                   onCancel={() => setIsEditModalOpen(false)}
                   footer={null}
               >
-                  <EditProduct
+                  <CreateEditProduct
                       itemData={itemData}
                       setIsModalOpen={setIsEditModalOpen}
+                      refetch={refetch}
                   />
               </Modal>
 

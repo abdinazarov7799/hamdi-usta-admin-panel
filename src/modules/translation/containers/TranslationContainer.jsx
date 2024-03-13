@@ -3,9 +3,9 @@ import {URLS} from "../../../constants/url";
 import usePaginateQuery from "../../../hooks/api/usePaginateQuery";
 import React, {useState} from "react";
 import {useTranslation} from "react-i18next";
-import {Button, Col, Input, Modal, Pagination, Popconfirm, Row, Space, Table} from "antd";
+import {Button, Input, Modal, Pagination, Row, Table} from "antd";
 import {find, get, isEqual} from "lodash";
-import {DeleteOutlined, EditOutlined, SearchOutlined} from "@ant-design/icons";
+import {EditOutlined, SearchOutlined} from "@ant-design/icons";
 import LanguageForm from "../components/LanguageForm";
 import Container from "../../../components/Container.jsx";
 
@@ -17,7 +17,7 @@ const TranslationContainer = () => {
     const [searchWord, setSearchWord] = useState(null);
     const [selected,setSelected] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { data, isLoading } = usePaginateQuery({
+    const { data, isLoading,refetch } = usePaginateQuery({
         key: KEYS.translations_list,
         url: URLS.translations_list,
         params: {
@@ -93,6 +93,7 @@ const TranslationContainer = () => {
                     onChange={(e) => setSearchWord(e.target.value)}
                 />
             </Row>
+            <Row>
                 <Table
                     columns={columns}
                     dataSource={get(data,'data.data.content',[])}
@@ -101,8 +102,9 @@ const TranslationContainer = () => {
                     size="small"
                     pagination={false}
                 />
+            </Row>
             <Modal title={t("Add Translations")} open={isModalOpen} onCancel={handleCancel} footer={null}>
-                <LanguageForm data={selected} handleCancel={handleCancel}/>
+                <LanguageForm data={selected} handleCancel={handleCancel} refetch={refetch}/>
             </Modal>
             <Row justify={"end"} style={{marginTop: 10}}>
                 <Pagination

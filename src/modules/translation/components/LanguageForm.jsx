@@ -7,14 +7,12 @@ import usePostQuery from "../../../hooks/api/usePostQuery";
 import {KEYS} from "../../../constants/key";
 import {URLS} from "../../../constants/url";
 
-const LanguageForm = ({data,handleCancel}) => {
+const LanguageForm = ({data,handleCancel,refetch}) => {
     const {t} = useTranslation();
-    const [messageApi, contextHolder] = message.useMessage();
     const { mutate, isLoading } = usePostQuery({
         listKeyId: KEYS.translations_list,
         hideSuccessToast: true,
     });
-    console.log(data)
     const onFinish = (values) => {
         mutate(
             { url: `${URLS.translations_edit}`, attributes: {
@@ -26,11 +24,11 @@ const LanguageForm = ({data,handleCancel}) => {
             {
                 onSuccess: () => {
                     handleCancel();
-                    messageApi.success('Tarjima muvaffaqiyatli amalga oshirildi!')
+                    refetch();
+                    message.success('Tarjima muvaffaqiyatli amalga oshirildi!')
                 },
                 onError: () => {
-                    handleCancel();
-                    messageApi.error( 'Tarjima amalga oshirilmadi!')
+                    message.error( 'Tarjima amalga oshirilmadi!')
                 },
             }
         );
@@ -40,7 +38,6 @@ const LanguageForm = ({data,handleCancel}) => {
     };
     return (
         <>
-            {contextHolder}
             <Form
                 name="lang"
                 layout={"vertical"}

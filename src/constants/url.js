@@ -23,5 +23,5 @@ export const URLS = {
     measure_edit: '/api/measure-unit/edit',
     translations_list: '/api/lang/all',
     translations_edit: '/api/lang/create-edit',
-    image_upload: '/api/image/upload',
+    image_upload: '/api/images/upload',
 };

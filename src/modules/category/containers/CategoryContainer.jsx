@@ -5,12 +5,11 @@ import {KEYS} from "../../../constants/key.js";
 import {URLS} from "../../../constants/url.js";
 import usePaginateQuery from "../../../hooks/api/usePaginateQuery.js";
 import useDeleteQuery from "../../../hooks/api/useDeleteQuery.js";
-import {Button, Input, Modal, Pagination, Popconfirm, Row, Space, Switch, Table} from "antd";
+import {Button, Input, Modal, Pagination, Popconfirm, Row, Space, Switch, Table, Typography} from "antd";
 import Container from "../../../components/Container.jsx";
 import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
-import CreateCategory from "../components/CreateCategory.jsx";
-import EditCategory from "../components/EditCategory.jsx";
-
+import CreateEditCategory from "../components/CreateEditCategory.jsx";
+const { Link } = Typography;
 const CategoryContainer = () => {
     const { t } = useTranslation();
     const [page, setPage] = useState(0);
@@ -61,6 +60,14 @@ const CategoryContainer = () => {
         {
             title: "descriptionRu",
             dataIndex: "descriptionRu"
+        },
+        {
+            title: "Image",
+            dataIndex: "imageUrl",
+            width: 50,
+            render: (props, data, index) => (
+                <Link href={get(data,'imageUrl')} target="_blank">{t("Image")}</Link>
+            )
         },
         {
             title: "number",
@@ -119,7 +126,7 @@ const CategoryContainer = () => {
                       onCancel={() => setIsCreateModalOpen(false)}
                       footer={null}
                   >
-                      <CreateCategory setIsModalOpen={setIsCreateModalOpen} refetch={refetch}/>
+                      <CreateEditCategory setIsModalOpen={setIsCreateModalOpen} refetch={refetch}/>
                   </Modal>
               </Space>
 
@@ -138,11 +145,10 @@ const CategoryContainer = () => {
                   onCancel={() => setIsEditModalOpen(false)}
                   footer={null}
               >
-                  <EditCategory
+                  <CreateEditCategory
                       itemData={itemData}
                       setIsModalOpen={setIsEditModalOpen}
-                      refetch={refetch}
-                  />
+                      refetch={refetch}/>
               </Modal>
 
               <Row justify={"end"} style={{marginTop: 10}}>
