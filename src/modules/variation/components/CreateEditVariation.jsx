@@ -77,6 +77,8 @@ const CreateEditVariation = ({itemData,setIsModalOpen,refetch}) => {
                     price: get(itemData,'price'),
                     measure: get(itemData,'measure'),
                     count: get(itemData,'count'),
+                    productId: get(itemData,'product.id'),
+                    measureUnitId: get(itemData,'measureUnit.id'),
                 }}
             >
                 <Form.Item
@@ -87,7 +89,6 @@ const CreateEditVariation = ({itemData,setIsModalOpen,refetch}) => {
                         showSearch
                         placeholder={t("Product")}
                         optionFilterProp="children"
-                        defaultValue={get(itemData,'product.id')}
                         onSearch={(e) => setSearchProduct(e)}
                         filterOption={(input, option) =>
                             (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
@@ -118,7 +119,6 @@ const CreateEditVariation = ({itemData,setIsModalOpen,refetch}) => {
                             showSearch
                             placeholder={t("Measure unit")}
                             optionFilterProp="children"
-                            defaultValue={get(itemData,'measureUnit.id')}
                             onSearch={(e) => setSearchProduct(e)}
                             filterOption={(input, option) =>
                                 (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}

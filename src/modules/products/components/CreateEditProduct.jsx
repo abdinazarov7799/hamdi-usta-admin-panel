@@ -225,7 +225,7 @@ const CreateEditProduct = ({itemData,setIsModalOpen,refetch}) => {
                     name="active"
                     valuePropName="active"
                 >
-                    <Checkbox checked={isActive} onChange={(e) => setIsActive(e.target.checked)}>{t("is Active")}</Checkbox>
+                    <Checkbox checked={isActive} onChange={(e) => setIsActive(e.target.checked)}>{t("is Active")} ?</Checkbox>
                 </Form.Item>
 
                 <Form.Item>

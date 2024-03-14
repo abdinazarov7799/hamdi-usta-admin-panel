@@ -27,6 +27,7 @@ import BannerPage from "../modules/banner/pages/BannerPage.jsx";
 import ConstantsPage from "../modules/constants/pages/ConstantsPage.jsx";
 import MeasurePage from "../modules/measure/pages/MeasurePage.jsx";
 import VariationPage from "../modules/variation/pages/VariationPage.jsx";
+import BranchPage from "../modules/branch/pages/BranchPage.jsx";
 // PAGES
 
 
@@ -66,6 +67,11 @@ const Router = ({ ...rest }) => {
                   path={"/variations"}
                   index
                   element={<VariationPage />}
+              />
+              <Route
+                  path={"/branches"}
+                  index
+                  element={<BranchPage />}
               />
               <Route
                   path={"/translations"}
