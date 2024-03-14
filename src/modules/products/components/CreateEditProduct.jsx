@@ -230,7 +230,7 @@ const CreateEditProduct = ({itemData,setIsModalOpen,refetch}) => {
 
                 <Form.Item>
                     <Button block type="primary" htmlType="submit" loading={isLoading || isLoadingEdit}>
-                        {t("Create")}
+                        {itemData ? t("Edit") : t("Create")}
                     </Button>
                 </Form.Item>
             </Form>

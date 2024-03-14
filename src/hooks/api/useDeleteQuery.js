@@ -3,6 +3,7 @@ import {useMutation, useQueryClient} from 'react-query'
 import {request} from "../../services/api";
 import {useTranslation} from "react-i18next";
 import {notification} from "antd";
+import {get} from "lodash";
 
 const deleteRequest = (url) => request.delete(url);
 
@@ -16,14 +17,16 @@ const useDeleteQuery = ({listKeyId = null}) => {
              }) => deleteRequest(url),
             {
                 onSuccess: (data) => {
-                    notification.success(t(data?.data?.message || 'SUCCESSFULLY DELETED'))
+                    notification.success({message: t(data?.data?.message || 'SUCCESSFULLY DELETED')})
 
                     if (listKeyId) {
                         queryClient.invalidateQueries(listKeyId)
                     }
                 },
                 onError: (data) => {
-                    notification.error(t(data?.response?.data?.message || 'ERROR'))
+                    get(data,'response.data.errors',[]).map((err) => (
+                        notification.error({message: t(get(err,'errorMsg') || `ERROR`)})
+                    ))
                 }
             }
         );

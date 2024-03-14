@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Container from "../../../components/Container.jsx";
-import {Button, Modal, Pagination, Popconfirm, Row, Space, Switch, Table} from "antd";
+import {Button, Input, Modal, Pagination, Popconfirm, Row, Space, Switch, Table} from "antd";
 import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
 import {get} from "lodash";
 import {useTranslation} from "react-i18next";
@@ -128,7 +128,12 @@ const BranchContainer = () => {
     return (
         <Container>
             <Space direction={"vertical"} style={{width: "100%"}} size={"middle"}>
-                <Row>
+                <Space size={"middle"}>
+                    <Input.Search
+                        placeholder={t("Search")}
+                        onChange={(e) => setSearchKey(e.target.value)}
+                        allowClear
+                    />
                     <Button
                         icon={<PlusOutlined />}
                         type={"primary"}
@@ -136,7 +141,7 @@ const BranchContainer = () => {
                     >
                         {t("New branch")}
                     </Button>
-                </Row>
+                </Space>
                 <Table
                     columns={columns}
                     dataSource={get(data,'data.data.content',[])}

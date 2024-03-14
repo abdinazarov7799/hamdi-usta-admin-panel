@@ -21,7 +21,8 @@ const  usePostQuery = ({hideSuccessToast = false, listKeyId = null}) => {
             {
                 onSuccess: (data) => {
                     if (!hideSuccessToast) {
-                        notification.success(t(data?.data?.message || 'SUCCESS'))
+                        notification.success({message: t(data?.data?.message || 'SUCCESS')
+                    })
                     }
 
                     if (listKeyId) {
@@ -30,7 +31,7 @@ const  usePostQuery = ({hideSuccessToast = false, listKeyId = null}) => {
                 },
                 onError: (data) => {
                     get(data,'response.data.errors',[]).map((err) => (
-                        notification.error(t(err?.errorMsg || 'ERROR'))
+                        notification.error({message: t(get(err,'errorMsg') || 'ERROR')})
                     ))
                 }
             }

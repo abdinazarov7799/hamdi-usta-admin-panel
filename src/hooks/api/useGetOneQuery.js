@@ -3,6 +3,7 @@ import {useQuery} from 'react-query'
 import {request} from "../../services/api";
 import {useTranslation} from "react-i18next";
 import {notification} from "antd";
+import {get} from "lodash";
 
 const fetchRequest = (url, params) => request.get(url, params);
 
@@ -23,7 +24,9 @@ const useGetOneQuery = (
         },
         onError: (data) => {
             if (showErrorMsg) {
-                notification.error(t(data?.response?.data?.message || `ERROR!!! api not working`))
+                get(data,'response.data.errors',[]).map((err) => (
+                    notification.error({message: t(get(err,'errorMsg') || 'ERROR!!! api not working')})
+                ))
             }
         },
         enabled,

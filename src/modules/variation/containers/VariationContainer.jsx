@@ -120,7 +120,12 @@ const VariationContainer = () => {
     return (
         <Container>
             <Space direction={"vertical"} style={{width: "100%"}} size={"middle"}>
-                <Row>
+                <Space size={"middle"}>
+                    <Input.Search
+                        placeholder={t("Search")}
+                        onChange={(e) => setSearchKey(e.target.value)}
+                        allowClear
+                    />
                     <Button
                         icon={<PlusOutlined />}
                         type={"primary"}
@@ -128,7 +133,7 @@ const VariationContainer = () => {
                     >
                         {t("New variation")}
                     </Button>
-                </Row>
+                </Space>
                 <Table
                     columns={columns}
                     dataSource={get(data,'data.data.content',[])}

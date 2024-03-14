@@ -28,6 +28,7 @@ import ConstantsPage from "../modules/constants/pages/ConstantsPage.jsx";
 import MeasurePage from "../modules/measure/pages/MeasurePage.jsx";
 import VariationPage from "../modules/variation/pages/VariationPage.jsx";
 import BranchPage from "../modules/branch/pages/BranchPage.jsx";
+import UsersPage from "../modules/users/pages/UsersPage.jsx";
 // PAGES
 
 
@@ -40,42 +41,38 @@ const Router = ({ ...rest }) => {
             <Route path={"/"} element={<DashboardLayout />}>
               <Route
                   path={"/categories"}
-                  index
                   element={<CategoryPage />}
               />
               <Route
                   path={"/products"}
-                  index
                   element={<ProductsPage />}
               />
               <Route
                   path={"/banner"}
-                  index
                   element={<BannerPage />}
               />
               <Route
                   path={"/constants"}
-                  index
                   element={<ConstantsPage />}
               />
               <Route
                   path={"/measuries"}
-                  index
                   element={<MeasurePage />}
               />
               <Route
                   path={"/variations"}
-                  index
                   element={<VariationPage />}
               />
               <Route
+                  path={"/users"}
+                  element={<UsersPage />}
+              />
+              <Route
                   path={"/branches"}
-                  index
                   element={<BranchPage />}
               />
               <Route
                   path={"/translations"}
-                  index
                   element={<TranslationPage />}
               />
               <Route

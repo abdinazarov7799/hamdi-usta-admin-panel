@@ -21,10 +21,12 @@ const ConstantsContainer = () => {
         {
             title: t("Key"),
             dataIndex: "key",
+            key: "key",
         },
         {
             title: t("Value"),
             dataIndex: "value",
+            key: "value",
         }
     ]
     for (const [key, value] of Object.entries(get(data,'data.data',{}))) {

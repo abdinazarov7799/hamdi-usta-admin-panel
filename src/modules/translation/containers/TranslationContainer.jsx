@@ -74,6 +74,7 @@ const TranslationContainer = () => {
             title: t("Edit"),
             width: 120,
             fixed: 'right',
+            key: 'action',
             render: (props, data, index) => (
                 <Button icon={<EditOutlined />} onClick={() => {
                     showModal();
@@ -110,7 +111,7 @@ const TranslationContainer = () => {
                 <Pagination
                     current={page+1}
                     onChange={(page) => setPage(page - 1)}
-                    total={get(data,'data.data.numberOfElements')}
+                    total={get(data,'data.data.totalPages') * 10}
                     showSizeChanger={false}
                 />
             </Row>

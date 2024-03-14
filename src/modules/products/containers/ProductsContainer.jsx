@@ -43,32 +43,39 @@ const ProductsContainer = () => {
         {
             title: t("ID"),
             dataIndex: "id",
+            key: "id",
             width: 30
         },
         {
             title: t("nameUz"),
-            dataIndex: "nameUz"
+            dataIndex: "nameUz",
+            key: "nameUz",
         },
         {
             title: t("nameRu"),
-            dataIndex: "nameRu"
+            dataIndex: "nameRu",
+            key: "nameRu",
         },
         {
             title: t("descriptionUz"),
-            dataIndex: "descriptionUz"
+            dataIndex: "descriptionUz",
+            key: "descriptionUz",
         },
         {
             title: t("descriptionRu"),
-            dataIndex: "descriptionRu"
+            dataIndex: "descriptionRu",
+            key: "descriptionRu",
         },
         {
             title: t("Category name uz"),
+            key: 'categoryNameUz',
             render: (props, data, index) => {
                 return get(data,'category.nameUz')
             }
         },
         {
-            title: t("Category name uz"),
+            title: t("Category name ru"),
+            key: 'categoryNameRu',
             render: (props, data, index) => {
                 return get(data,'category.nameRu')
             }
@@ -76,6 +83,7 @@ const ProductsContainer = () => {
         {
             title: t("Image"),
             dataIndex: "imageUrl",
+            key: "imageUrl",
             width: 50,
             render: (props, data, index) => (
                 <Link href={get(data,'imageUrl')} target="_blank">{t("Image")}</Link>
@@ -84,11 +92,13 @@ const ProductsContainer = () => {
         {
             title: t("Order"),
             dataIndex: "number",
+            key: "number",
             width: 70
         },
         {
             title: t("is active"),
             dataIndex: "active",
+            key: "active",
             render: (props,data,index) => (
                 <Switch disabled checked={get(data,'active')} />
             )
@@ -97,6 +107,7 @@ const ProductsContainer = () => {
             title: t("Edit / Delete"),
             width: 120,
             fixed: 'right',
+            key: 'action',
             render: (props, data, index) => (
                 <Space key={index}>
                     <Button icon={<EditOutlined />} onClick={() => {

@@ -39,10 +39,12 @@ const BannerContainer = () => {
         {
             title: t("ID"),
             dataIndex: "id",
+            key: "id",
         },
         {
             title: t("Image"),
             dataIndex: "imageUrl",
+            key: "imageUrl",
             render: (props, data, index) => (
                 <Link href={get(data,'imageUrl')} target="_blank">{t("Image")}</Link>
             )
@@ -50,10 +52,12 @@ const BannerContainer = () => {
         {
             title: t("Order"),
             dataIndex: "number",
+            key: "number",
         },
         {
             title: t("Delete"),
             fixed: 'right',
+            key: 'action',
             render: (props, data, index) => (
                 <Popconfirm
                     key={index+1}

@@ -43,19 +43,23 @@ const MeasureContainer = () => {
         {
             title: t("ID"),
             dataIndex: "id",
+            key: "id",
         },
         {
             title: t("nameUz"),
-            dataIndex: "nameUz"
+            dataIndex: "nameUz",
+            key: "nameUz",
         },
         {
             title: t("nameRu"),
-            dataIndex: "nameRu"
+            dataIndex: "nameRu",
+            key: "nameRu",
         },
         {
             title: t("Edit / Delete"),
             width: 120,
             fixed: 'right',
+            key: 'action',
             render: (props, data, index) => (
                 <Space key={index}>
                     <Button icon={<EditOutlined />} onClick={() => {

@@ -3,6 +3,7 @@ import {useMutation, useQueryClient} from 'react-query'
 import {request} from "../../services/api";
 import {useTranslation} from "react-i18next";
 import {notification} from "antd";
+import {get} from "lodash";
 
 const putRequest = (url, attributes) => request.put(url, attributes);
 
@@ -18,7 +19,7 @@ const usePutQuery = ({hideSuccessToast = false, listKeyId = null}) => {
             {
                 onSuccess: (data) => {
                     if (!hideSuccessToast) {
-                        notification.success(t(data?.data?.message || 'SUCCESS'))
+                        notification.success({message: t(data?.data?.message || 'SUCCESS')})
                     }
 
                     if (listKeyId) {
@@ -26,7 +27,9 @@ const usePutQuery = ({hideSuccessToast = false, listKeyId = null}) => {
                     }
                 },
                 onError: (data) => {
-                    notification.error(t(data?.response?.data?.message || 'ERROR'))
+                    get(data,'response.data.errors',[]).map((err) => (
+                        notification.error({message: t(get(err,'errorMsg') || 'ERROR')})
+                    ))
                 }
             }
         );

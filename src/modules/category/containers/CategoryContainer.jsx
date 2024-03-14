@@ -15,7 +15,7 @@ const CategoryContainer = () => {
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(10);
     const [itemData, setItemData] = useState(null);
-    const [searchKey,setSearchKey] = useState('');
+    const [searchKey,setSearchKey] = useState();
     const [isCreateModalOpenCreate, setIsCreateModalOpen] = useState(false)
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
     const {data,isLoading,isFetching,refetch} = usePaginateQuery({
@@ -43,40 +43,48 @@ const CategoryContainer = () => {
         {
             title: t("ID"),
             dataIndex: "id",
+            key: "id",
             width: 30
         },
         {
             title: t("nameUz"),
-            dataIndex: "nameUz"
+            dataIndex: "nameUz",
+            key: "nameUz"
         },
         {
             title: t("nameRu"),
-            dataIndex: "nameRu"
+            dataIndex: "nameRu",
+            key: "nameRu",
         },
         {
             title: t("descriptionUz"),
-            dataIndex: "descriptionUz"
+            dataIndex: "descriptionUz",
+            key: "descriptionUz",
         },
         {
             title: t("descriptionRu"),
-            dataIndex: "descriptionRu"
+            dataIndex: "descriptionRu",
+            key: "descriptionRu",
         },
         {
             title: t("Image"),
             dataIndex: "imageUrl",
+            key: "imageUrl",
             width: 50,
             render: (props, data, index) => (
-                <Link href={get(data,'imageUrl')} target="_blank">{t("Image")}</Link>
+                <Link href={get(data,'imageUrl')} key={index+1} target="_blank">{t("Image")}</Link>
             )
         },
         {
             title: t("Order"),
             dataIndex: "number",
+            key: "number",
             width: 70
         },
         {
             title: t("is active"),
             dataIndex: "active",
+            key: "active",
             render: (props,data,index) => (
                 <Switch disabled checked={get(data,'active')} />
             )
@@ -85,6 +93,7 @@ const CategoryContainer = () => {
             title: t("Edit / Delete"),
             width: 120,
             fixed: 'right',
+            key: 'action',
             render: (props, data, index) => (
                 <Space key={index}>
                     <Button icon={<EditOutlined />} onClick={() => {
@@ -140,18 +149,6 @@ const CategoryContainer = () => {
                   loading={isLoading}
               />
 
-              <Modal
-                  title={t("Edit category")}
-                  open={isEditModalOpen}
-                  onCancel={() => setIsEditModalOpen(false)}
-                  footer={null}
-              >
-                  <CreateEditCategory
-                      itemData={itemData}
-                      setIsModalOpen={setIsEditModalOpen}
-                      refetch={refetch}/>
-              </Modal>
-
               <Row justify={"end"} style={{marginTop: 10}}>
                   <Pagination
                       current={page+1}
@@ -161,6 +158,17 @@ const CategoryContainer = () => {
                   />
               </Row>
           </Space>
+          <Modal
+              title={t("Edit category")}
+              open={isEditModalOpen}
+              onCancel={() => setIsEditModalOpen(false)}
+              footer={null}
+          >
+              <CreateEditCategory
+                  itemData={itemData}
+                  setIsModalOpen={setIsEditModalOpen}
+                  refetch={refetch}/>
+          </Modal>
       </Container>
   )
 }

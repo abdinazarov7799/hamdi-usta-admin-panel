@@ -34,4 +34,7 @@ export const URLS = {
     banner_upload: '/api/banner/upload',
     constants_get_all: '/api/constants/get',
     constants_edit: '/api/constants/edit',
+    users_get_all: "/api/users/get-all",
+    users_ban: "/api/users/ban",
+    users_unban: "/api/users/unban",
 };

@@ -3,15 +3,18 @@ import {useTranslation} from "react-i18next";
 import usePostQuery from "../../../hooks/api/usePostQuery.js";
 import {KEYS} from "../../../constants/key.js";
 import {URLS} from "../../../constants/url.js";
-import {Button, Checkbox, Form, Input, InputNumber} from "antd";
+import {Button, Checkbox, Col, DatePicker, Form, Input, Row, Space} from "antd";
 import {get} from "lodash";
 import usePutQuery from "../../../hooks/api/usePutQuery.js";
+import dayjs from "dayjs";
 const { TextArea } = Input;
 
 const CreateEditCategory = ({itemData,setIsModalOpen,refetch}) => {
     const { t } = useTranslation();
     const [isActive, setIsActive] = useState(get(itemData,'active',true));
     const [isClosesAfterMn, setIsClosesAfterMn] = useState(get(itemData,'closesAfterMn',true));
+    const [openingTime, setOpeningTime] = useState(get(itemData,'openingTime'));
+    const [closingTime, setClosingTime] = useState(get(itemData,'closingTime'));
     const { mutate, isLoading } = usePostQuery({
         listKeyId: KEYS.branch_get_all,
     });
@@ -27,6 +30,8 @@ const CreateEditCategory = ({itemData,setIsModalOpen,refetch}) => {
             ...values,
             active: isActive,
             closesAfterMn: isClosesAfterMn,
+            openingTime,
+            closingTime,
         }
         if (itemData) {
             mutateEdit(
@@ -50,7 +55,6 @@ const CreateEditCategory = ({itemData,setIsModalOpen,refetch}) => {
             );
         }
     };
-
     return (
         <>
             <Form
@@ -62,12 +66,9 @@ const CreateEditCategory = ({itemData,setIsModalOpen,refetch}) => {
                     nameRu: get(itemData,'nameRu'),
                     addressUz: get(itemData,'addressUz'),
                     addressRu: get(itemData,'addressRu'),
-                    openingTime: get(itemData,'openingTime'),
-                    closingTime: get(itemData,'closingTime'),
                     closesAfterMn: get(itemData,'closesAfterMn'),
                     lat: get(itemData,'lat'),
                     lon: get(itemData,'lon'),
-                    number: get(itemData,'number')
                 }}
             >
                 <Form.Item
@@ -102,59 +103,79 @@ const CreateEditCategory = ({itemData,setIsModalOpen,refetch}) => {
                     <TextArea />
                 </Form.Item>
 
-                <Form.Item
-                    label={t("openingTime")}
-                    name="openingTime"
-                    rules={[{required: true,}]}
-                >
-                    <Input />
-                </Form.Item>
+                <Row justify={"space-between"}>
+                    <Col span={11}>
+                        <Form.Item
+                            label={t("openingTime")}
+                            name="openingTime"
+                            rules={[{required: true,}]}
+                        >
+                            <DatePicker
+                                picker={"time"}
+                                format={"HH:mm"}
+                                style={{width: "100%"}}
+                                onChange={(date,dateString) => setOpeningTime(dateString)}
+                            />
+                        </Form.Item>
+                    </Col>
 
-                <Form.Item
-                    label={t("closingTime")}
-                    name="closingTime"
-                    rules={[{required: true,}]}
-                >
-                    <Input />
-                </Form.Item>
+                    <Col span={11}>
+                        <Form.Item
+                            label={t("closingTime")}
+                            name="closingTime"
+                            rules={[{required: true,}]}
+                        >
+                            <DatePicker
+                                style={{width: "100%"}}
+                                picker={"time"}
+                                format={"HH:mm"}
+                                onChange={(date,dateString) => setClosingTime(dateString)}
+                            />
+                        </Form.Item>
+                    </Col>
+                </Row>
 
-                <Form.Item
-                    label={t("lat")}
-                    name="lat"
-                    rules={[{required: true,}]}
-                >
-                    <Input />
-                </Form.Item>
+                <Row justify={"space-between"}>
+                    <Col span={11}>
+                        <Form.Item
+                            label={t("lat")}
+                            name="lat"
+                            rules={[{required: true,}]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col span={11}>
+                        <Form.Item
+                            label={t("lon")}
+                            name="lon"
+                            rules={[{required: true,}]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                </Row>
 
-                <Form.Item
-                    label={t("lon")}
-                    name="lon"
-                    rules={[{required: true,}]}
-                >
-                    <Input />
-                </Form.Item>
+                <Row justify={"space-between"}>
+                    <Col span={11}>
+                        <Form.Item
+                            name="closesAfterMn"
+                            valuePropName="closesAfterMn"
+                        >
+                            <Checkbox checked={isClosesAfterMn} onChange={(e) => setIsClosesAfterMn(e.target.checked)}>{t("closesAfterMn")} ?</Checkbox>
+                        </Form.Item>
+                    </Col>
 
-                <Form.Item
-                    label={t("Order")}
-                    name="number"
-                    rules={[{required: true,}]}
-                >
-                    <InputNumber />
-                </Form.Item>
+                    <Col span={11}>
+                        <Form.Item
+                            name="active"
+                            valuePropName="active"
+                        >
+                            <Checkbox checked={isActive} onChange={(e) => setIsActive(e.target.checked)}>{t("is Active")} ?</Checkbox>
+                        </Form.Item>
 
-                <Form.Item
-                    name="closesAfterMn"
-                    valuePropName="closesAfterMn"
-                >
-                    <Checkbox checked={isClosesAfterMn} onChange={(e) => setIsClosesAfterMn(e.target.checked)}>{t("closesAfterMn")} ?</Checkbox>
-                </Form.Item>
-
-                <Form.Item
-                    name="active"
-                    valuePropName="active"
-                >
-                    <Checkbox checked={isActive} onChange={(e) => setIsActive(e.target.checked)}>{t("is Active")} ?</Checkbox>
-                </Form.Item>
+                    </Col>
+                </Row>
 
                 <Form.Item>
                     <Button block type="primary" htmlType="submit" loading={isLoading || isLoadingEdit}>

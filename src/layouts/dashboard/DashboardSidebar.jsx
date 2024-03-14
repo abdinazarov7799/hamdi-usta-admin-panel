@@ -24,6 +24,10 @@ const DashboardSidebar = () => {
             key: "/banner",
         },
         {
+            label: t("Users"),
+            key: "/users",
+        },
+        {
             label: t("Branches"),
             key: "/branches",
         },
