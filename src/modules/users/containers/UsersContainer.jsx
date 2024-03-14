@@ -106,7 +106,7 @@ const UsersContainer = () => {
                         get(data,'banned') ?
                             <Popconfirm
                                 title={t("Unblock")}
-                                description={t("Are you really unblocking this user?")}
+                                description={t("Are you really unbanned this user?")}
                                 onConfirm={() => useUnBan(get(data,'id'))}
                                 okText={t("Yes")}
                                 cancelText={t("No")}
@@ -115,7 +115,7 @@ const UsersContainer = () => {
                             </Popconfirm>  :
                             <Popconfirm
                                 title={t("Block")}
-                                description={t("Are you really blocking this user?")}
+                                description={t("Are you really banning this user?")}
                                 onConfirm={() => useBan(get(data,'id'))}
                                 okText={t("Yes")}
                                 cancelText={t("No")}
