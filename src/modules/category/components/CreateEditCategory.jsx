@@ -3,11 +3,12 @@ import {useTranslation} from "react-i18next";
 import usePostQuery from "../../../hooks/api/usePostQuery.js";
 import {KEYS} from "../../../constants/key.js";
 import {URLS} from "../../../constants/url.js";
-import {Button, Checkbox, Form, Input, InputNumber, Upload} from "antd";
+import {Button, Checkbox, Form, Input, InputNumber, message, Upload} from "antd";
 import ImgCrop from "antd-img-crop";
 import {InboxOutlined} from "@ant-design/icons";
 import {get} from "lodash";
 import usePutQuery from "../../../hooks/api/usePutQuery.js";
+import Resizer from "react-image-file-resizer";
 const { TextArea } = Input;
 const { Dragger } = Upload;
 
@@ -54,71 +55,47 @@ const CreateEditCategory = ({itemData,setIsModalOpen,refetch}) => {
         }
     };
 
+    const resizeFile = (file) =>
+        new Promise((resolve) => {
+            Resizer.imageFileResizer(
+                file,
+                400,
+                400,
+                "WEBP",
+                60,
+                0,
+                (uri) => {
+                    resolve(uri);
+                },
+                "base64"
+            );
+        });
+    const beforeUpload = async (file) => {
+        const isLt2M = file.size / 1024 / 1024 < 10;
+        if (!isLt2M) {
+            message.error(t('Image must smaller than 10MB!'));
+            return;
+        }
+        const uri = await resizeFile(file);
+        const resizedImage = await fetch(uri).then(res => res.blob());
+        return new Blob([resizedImage],{ type: "webp"});
+    };
     const customRequest = async (options) => {
         const { file, onSuccess, onError } = options;
-
-        // Rasmni o'qish va .webp formatga o'tqazish
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-            const img = new Image();
-            img.src = reader.result;
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                const maxSize = 400;
-                let width = img.width;
-                let height = img.height;
-
-                if (width > height) {
-                    if (width > maxSize) {
-                        height *= maxSize / width;
-                        width = maxSize;
-                    }
-                } else {
-                    if (height > maxSize) {
-                        width *= maxSize / height;
-                        height = maxSize;
-                    }
-                }
-
-                canvas.width = width;
-                canvas.height = height;
-                ctx.drawImage(img, 0, 0, width, height);
-
-                canvas.toBlob(
-                    (blob) => {
-                        // Rasmni .webp formatga o'tqazish
-                        const newFile = new File([blob], file.name, { type: 'image/webp' });
-
-                        // Jo'natish
-                        const formData = new FormData();
-                        formData.append('file', newFile);
-                        UploadImage(
-                            {
-                                url: URLS.image_upload,
-                                attributes: formData,
-                                config: {
-                                    headers: {
-                                        'Content-Type': 'multipart/form-data'
-                                    }},
-                            },
-                            {
-                                onSuccess: ({ data }) => {
-                                    onSuccess(true)
-                                    setImgUrl(data)
-                                },
-                                onError: (err) => {
-                                    onError(err)
-                                }
-                            }
-                        );
-                    },
-                    'image/webp',
-                    0.5 // 50% compress
-                );
-            };
-        };
+        const formData = new FormData();
+        formData.append('file', file);
+        UploadImage(
+            { url: URLS.image_upload, attributes: formData, config: { headers: { 'Content-Type': 'multipart/form-data' } } },
+            {
+                onSuccess: ({ data }) => {
+                    onSuccess(true);
+                    setImgUrl(data);
+                },
+                onError: (err) => {
+                    onError(err);
+                },
+            }
+        );
     };
     return (
         <>
@@ -176,7 +153,13 @@ const CreateEditCategory = ({itemData,setIsModalOpen,refetch}) => {
 
                 <Form.Item>
                     <ImgCrop quality={0.5} aspect={400/400}>
-                        <Dragger maxCount={1} multiple={false} accept={".jpg,.png,jpeg,svg"} customRequest={customRequest}>
+                        <Dragger
+                            maxCount={1}
+                            multiple={false}
+                            accept={".jpg,.png,jpeg,svg"}
+                            customRequest={customRequest}
+                            beforeUpload={beforeUpload}
+                        >
                             <p className="ant-upload-drag-icon">
                                 <InboxOutlined />
                             </p>
