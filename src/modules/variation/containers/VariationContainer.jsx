@@ -56,11 +56,6 @@ const VariationContainer = () => {
             key: "price"
         },
         {
-            title: t("Count"),
-            dataIndex: "count",
-            key: "count"
-        },
-        {
             title: t("Measure"),
             dataIndex: "measure",
             key: "measure"

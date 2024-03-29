@@ -76,7 +76,6 @@ const CreateEditVariation = ({itemData,setIsModalOpen,refetch}) => {
                     number: get(itemData,'number'),
                     price: get(itemData,'price'),
                     measure: get(itemData,'measure'),
-                    count: get(itemData,'count'),
                     productId: get(itemData,'product.id'),
                     measureUnitId: get(itemData,'measureUnit.id'),
                 }}
@@ -136,14 +135,6 @@ const CreateEditVariation = ({itemData,setIsModalOpen,refetch}) => {
                 <Form.Item
                     label={t("Order")}
                     name="number"
-                    rules={[{required: true,}]}
-                >
-                    <InputNumber style={{width: "100%"}}/>
-                </Form.Item>
-
-                <Form.Item
-                    label={t("Count")}
-                    name="count"
                     rules={[{required: true,}]}
                 >
                     <InputNumber style={{width: "100%"}}/>

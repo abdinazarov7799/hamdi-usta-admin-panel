@@ -24,7 +24,7 @@ const useGetOneQuery = (
         },
         onError: (data) => {
             if (showErrorMsg) {
-                get(data,'response.data.errors',[]).map((err) => (
+                get(data,'response.data.errors',[])?.map((err) => (
                     notification.error({message: t(get(err,'errorMsg') || 'ERROR!!! api not working')})
                 ))
             }
