@@ -23,7 +23,7 @@ const CreateEditProduct = ({itemData,setIsModalOpen,refetch}) => {
         listKeyId: KEYS.product_get_all,
     });
     const { mutate:mutateEdit, isLoading:isLoadingEdit } = usePutQuery({
-        listKeyId: KEYS.category_get_all,
+        listKeyId: KEYS.product_get_all,
         hideSuccessToast: false
     });
     const { mutate:UploadImage } = usePostQuery({
@@ -48,7 +48,7 @@ const CreateEditProduct = ({itemData,setIsModalOpen,refetch}) => {
         }
         if (itemData){
             mutateEdit(
-                { url: `${URLS.category_edit}/${get(itemData,'id')}`, attributes: formData },
+                { url: `${URLS.product_edit}/${get(itemData,'id')}`, attributes: formData },
                 {
                     onSuccess: () => {
                         setIsModalOpen(false);
