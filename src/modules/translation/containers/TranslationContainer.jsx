@@ -22,7 +22,7 @@ const TranslationContainer = () => {
         url: URLS.translations_list,
         params: {
             params: {
-                content: searchWord,
+                search: searchWord,
                 size: pageSize,
             },
         },
