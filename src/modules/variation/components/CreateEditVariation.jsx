@@ -76,6 +76,8 @@ const CreateEditVariation = ({itemData,setIsModalOpen,refetch}) => {
                     number: get(itemData,'number'),
                     price: get(itemData,'price'),
                     measure: get(itemData,'measure'),
+                    nameUz: get(itemData,'nameUz'),
+                    nameRu: get(itemData,'nameRu'),
                     productId: get(itemData,'product.id'),
                     measureUnitId: get(itemData,'measureUnit.id'),
                 }}
@@ -101,6 +103,22 @@ const CreateEditVariation = ({itemData,setIsModalOpen,refetch}) => {
                     />
                 </Form.Item>
 
+                <Form.Item
+                    label={t("NameUz")}
+                    name="nameUz"
+                    rules={[{required: true,}]}
+                >
+                    <Input style={{width: "100%"}}/>
+                </Form.Item>
+
+                <Form.Item
+                    label={t("NameRu")}
+                    name="nameRu"
+                    rules={[{required: true,}]}
+                >
+                    <Input style={{width: "100%"}}/>
+                </Form.Item>
+
                 <Space>
                     <Form.Item
                         label={t("Measure")}
@@ -118,7 +136,7 @@ const CreateEditVariation = ({itemData,setIsModalOpen,refetch}) => {
                             showSearch
                             placeholder={t("Measure unit")}
                             optionFilterProp="children"
-                            onSearch={(e) => setSearchProduct(e)}
+                            onSearch={(e) => setSearchMeasure(e)}
                             filterOption={(input, option) =>
                                 (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
                             loading={isLoadingMeasures}
