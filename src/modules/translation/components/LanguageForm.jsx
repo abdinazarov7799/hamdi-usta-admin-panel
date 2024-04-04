@@ -61,6 +61,7 @@ const LanguageForm = ({data,handleCancel,refetch}) => {
                 layout={"vertical"}
                 onFinish={onFinish}
                 autoComplete="off"
+                form={form}
             >
                 <Form.Item
                     label={t("Key")}
