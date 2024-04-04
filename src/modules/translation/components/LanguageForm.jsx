@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Button, Form, Input, message, notification} from "antd";
 import {find, get, isEqual} from "lodash";
 import {useTranslation} from "react-i18next";
@@ -9,10 +9,28 @@ import {URLS} from "../../../constants/url";
 
 const LanguageForm = ({data,handleCancel,refetch}) => {
     const {t} = useTranslation();
+    const [form] = Form.useForm();
     const { mutate, isLoading } = usePostQuery({
         listKeyId: KEYS.translations_list,
         hideSuccessToast: true,
     });
+
+    useEffect(() => {
+        form.setFieldsValue({
+            key: get(data, "key"),
+            UZ: get(
+                findLang(get(data, "languageSourcePs", []), "UZ"),
+                "translation",
+                ""
+            ),
+            RU: get(
+                findLang(get(data, "languageSourcePs", []), "RU"),
+                "translation",
+                ""
+            )
+        });
+    }, [data]);
+    
     const onFinish = (values) => {
         mutate(
             { url: `${URLS.translations_edit}`, attributes: {
@@ -43,19 +61,6 @@ const LanguageForm = ({data,handleCancel,refetch}) => {
                 layout={"vertical"}
                 onFinish={onFinish}
                 autoComplete="off"
-                initialValues={{
-                    key: get(data, "key"),
-                    UZ: get(
-                        findLang(get(data, "languageSourcePs", []), "UZ"),
-                        "translation",
-                        ""
-                    ),
-                    RU: get(
-                        findLang(get(data, "languageSourcePs", []), "RU"),
-                        "translation",
-                        ""
-                    )
-                }}
             >
                 <Form.Item
                     label={t("Key")}
