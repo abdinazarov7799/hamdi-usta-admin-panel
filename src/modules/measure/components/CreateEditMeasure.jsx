@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from "react-i18next";
 import usePostQuery from "../../../hooks/api/usePostQuery.js";
 import {KEYS} from "../../../constants/key.js";
@@ -9,6 +9,7 @@ import usePutQuery from "../../../hooks/api/usePutQuery.js";
 
 const CreateEditMeasure = ({itemData,setIsModalOpen,refetch}) => {
     const { t } = useTranslation();
+    const [form] = Form.useForm();
     const { mutate, isLoading } = usePostQuery({
         listKeyId: KEYS.measure_get_all,
     });
@@ -16,6 +17,13 @@ const CreateEditMeasure = ({itemData,setIsModalOpen,refetch}) => {
         listKeyId: KEYS.measure_get_all,
         hideSuccessToast: false
     });
+
+    useEffect(() => {
+        form.setFieldsValue({
+            nameUz: get(itemData,'nameUz'),
+            nameRu: get(itemData,'nameRu'),
+        });
+    }, [itemData]);
 
     const onFinish = (values) => {
         const formData = {
@@ -50,10 +58,7 @@ const CreateEditMeasure = ({itemData,setIsModalOpen,refetch}) => {
                 onFinish={onFinish}
                 autoComplete="off"
                 layout={"vertical"}
-                initialValues={{
-                    nameUz: get(itemData,'nameUz'),
-                    nameRu: get(itemData,'nameRu'),
-                }}
+                form={form}
             >
                 <Form.Item
                     label={t("nameUz")}

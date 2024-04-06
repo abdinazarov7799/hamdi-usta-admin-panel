@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from "react-i18next";
 import usePostQuery from "../../../hooks/api/usePostQuery.js";
 import {KEYS} from "../../../constants/key.js";
@@ -15,6 +15,7 @@ import Resizer from "react-image-file-resizer";
 
 const CreateEditProduct = ({itemData,setIsModalOpen,refetch}) => {
     const { t } = useTranslation();
+    const [form] = Form.useForm();
     const [isActive, setIsActive] = useState(get(itemData,'active',true));
     const [imageUrl,setImgUrl] = useState(get(itemData,'imageUrl'));
     const [categoryId,setCategoryId] = useState(null);
@@ -39,6 +40,15 @@ const CreateEditProduct = ({itemData,setIsModalOpen,refetch}) => {
             }
         }
     })
+    useEffect(() => {
+        form.setFieldsValue({
+            nameUz: get(itemData,'nameUz'),
+            nameRu: get(itemData,'nameRu'),
+            descriptionUz: get(itemData,'descriptionUz'),
+            descriptionRu: get(itemData,'descriptionRu'),
+            number: get(itemData,'number')
+        });
+    }, [itemData]);
     const onFinish = (values) => {
         const formData = {
             ...values,
@@ -117,13 +127,7 @@ const CreateEditProduct = ({itemData,setIsModalOpen,refetch}) => {
                 onFinish={onFinish}
                 autoComplete="off"
                 layout={"vertical"}
-                initialValues={{
-                    nameUz: get(itemData,'nameUz'),
-                    nameRu: get(itemData,'nameRu'),
-                    descriptionUz: get(itemData,'descriptionUz'),
-                    descriptionRu: get(itemData,'descriptionRu'),
-                    number: get(itemData,'number')
-                }}
+                form={form}
             >
                 <Form.Item
                     label={t("Category")}

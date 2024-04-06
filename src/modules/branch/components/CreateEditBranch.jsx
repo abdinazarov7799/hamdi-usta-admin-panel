@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from "react-i18next";
 import usePostQuery from "../../../hooks/api/usePostQuery.js";
 import {KEYS} from "../../../constants/key.js";
@@ -6,11 +6,11 @@ import {URLS} from "../../../constants/url.js";
 import {Button, Checkbox, Col, DatePicker, Form, Input, Row, Space} from "antd";
 import {get} from "lodash";
 import usePutQuery from "../../../hooks/api/usePutQuery.js";
-import dayjs from "dayjs";
 const { TextArea } = Input;
 
 const CreateEditCategory = ({itemData,setIsModalOpen,refetch}) => {
     const { t } = useTranslation();
+    const [form] = Form.useForm();
     const [isActive, setIsActive] = useState(get(itemData,'active',true));
     const [isClosesAfterMn, setIsClosesAfterMn] = useState(get(itemData,'closesAfterMn',true));
     const [openingTime, setOpeningTime] = useState(get(itemData,'openingTime'));
@@ -22,9 +22,18 @@ const CreateEditCategory = ({itemData,setIsModalOpen,refetch}) => {
         listKeyId: KEYS.branch_get_all,
         hideSuccessToast: false
     });
-    const { mutate:UploadImage } = usePostQuery({
-        hideSuccessToast: true
-    });
+
+    useEffect(() => {
+        form.setFieldsValue({
+            nameUz: get(itemData,'nameUz'),
+            nameRu: get(itemData,'nameRu'),
+            addressUz: get(itemData,'addressUz'),
+            addressRu: get(itemData,'addressRu'),
+            closesAfterMn: get(itemData,'closesAfterMn'),
+            lat: get(itemData,'lat'),
+            lon: get(itemData,'lon'),
+        });
+    }, [itemData]);
     const onFinish = (values) => {
         const formData = {
             ...values,
@@ -61,15 +70,7 @@ const CreateEditCategory = ({itemData,setIsModalOpen,refetch}) => {
                 onFinish={onFinish}
                 autoComplete="off"
                 layout={"vertical"}
-                initialValues={{
-                    nameUz: get(itemData,'nameUz'),
-                    nameRu: get(itemData,'nameRu'),
-                    addressUz: get(itemData,'addressUz'),
-                    addressRu: get(itemData,'addressRu'),
-                    closesAfterMn: get(itemData,'closesAfterMn'),
-                    lat: get(itemData,'lat'),
-                    lon: get(itemData,'lon'),
-                }}
+                form={form}
             >
                 <Form.Item
                     label={t("nameUz")}

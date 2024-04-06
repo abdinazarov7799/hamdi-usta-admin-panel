@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from "react-i18next";
 import usePostQuery from "../../../hooks/api/usePostQuery.js";
 import {KEYS} from "../../../constants/key.js";
@@ -10,6 +10,7 @@ import useGetAllQuery from "../../../hooks/api/useGetAllQuery.js";
 
 const CreateEditVariation = ({itemData,setIsModalOpen,refetch}) => {
     const { t } = useTranslation();
+    const [form] = Form.useForm();
     const [searchProduct, setSearchProduct] = useState(null);
     const [searchMeasure, setSearchMeasure] = useState(null);
     const { mutate, isLoading } = usePostQuery({
@@ -39,6 +40,18 @@ const CreateEditVariation = ({itemData,setIsModalOpen,refetch}) => {
             }
         }
     })
+
+    useEffect(() => {
+        form.setFieldsValue({
+            number: get(itemData,'number'),
+            price: get(itemData,'price'),
+            measure: get(itemData,'measure'),
+            nameUz: get(itemData,'nameUz'),
+            nameRu: get(itemData,'nameRu'),
+            productId: get(itemData,'product.id'),
+            measureUnitId: get(itemData,'measureUnit.id'),
+        });
+    }, [itemData]);
     const onFinish = (values) => {
         const formData = {
             ...values,
@@ -72,15 +85,7 @@ const CreateEditVariation = ({itemData,setIsModalOpen,refetch}) => {
                 onFinish={onFinish}
                 autoComplete="off"
                 layout={"vertical"}
-                initialValues={{
-                    number: get(itemData,'number'),
-                    price: get(itemData,'price'),
-                    measure: get(itemData,'measure'),
-                    nameUz: get(itemData,'nameUz'),
-                    nameRu: get(itemData,'nameRu'),
-                    productId: get(itemData,'product.id'),
-                    measureUnitId: get(itemData,'measureUnit.id'),
-                }}
+                form={form}
             >
                 <Form.Item
                     label={t("Product")}
