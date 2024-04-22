@@ -18,7 +18,6 @@ const CreateEditProduct = ({itemData,setIsModalOpen,refetch}) => {
     const [form] = Form.useForm();
     const [isActive, setIsActive] = useState(get(itemData,'active',true));
     const [imageUrl,setImgUrl] = useState(get(itemData,'imageUrl'));
-    const [categoryId,setCategoryId] = useState(null);
     const [searchCategory,setSearchCategory] = useState(null);
     const { mutate, isLoading } = usePostQuery({
         listKeyId: KEYS.product_get_all,
@@ -46,15 +45,16 @@ const CreateEditProduct = ({itemData,setIsModalOpen,refetch}) => {
             nameRu: get(itemData,'nameRu'),
             descriptionUz: get(itemData,'descriptionUz'),
             descriptionRu: get(itemData,'descriptionRu'),
-            number: get(itemData,'number')
+            number: get(itemData,'number'),
+            categoryId: get(itemData,'category.id'),
         });
+        setImgUrl(get(itemData,'imageUrl'))
     }, [itemData]);
     const onFinish = (values) => {
         const formData = {
             ...values,
             active: isActive,
             imageUrl,
-            categoryId
         }
         if (itemData){
             mutateEdit(
@@ -137,8 +137,6 @@ const CreateEditProduct = ({itemData,setIsModalOpen,refetch}) => {
                         showSearch
                         placeholder={t("Category")}
                         optionFilterProp="children"
-                        defaultValue={get(itemData,'category.id')}
-                        onChange={(e) => setCategoryId(e)}
                         onSearch={(e) => setSearchCategory(e)}
                         filterOption={(input, option) =>
                             (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}

@@ -36,6 +36,7 @@ const CreateEditCategory = ({itemData,setIsModalOpen,refetch}) => {
             descriptionRu: get(itemData,'descriptionRu'),
             number: get(itemData,'number')
         });
+        setImgUrl(get(itemData,'imageUrl'))
     }, [itemData]);
     const onFinish = (values) => {
         const formData = {
