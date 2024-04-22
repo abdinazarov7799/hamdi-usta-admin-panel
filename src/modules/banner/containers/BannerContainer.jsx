@@ -61,7 +61,7 @@ const BannerContainer = () => {
             render: (props, data, index) => (
                 <Popconfirm
                     key={index+1}
-                    title={t("Delete category")}
+                    title={t("Delete")}
                     description={t("Are you sure to delete?")}
                     onConfirm={() => useDelete(get(data,'id'))}
                     okText={t("Yes")}

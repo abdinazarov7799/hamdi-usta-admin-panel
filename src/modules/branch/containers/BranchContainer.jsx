@@ -113,7 +113,7 @@ const BranchContainer = () => {
                         setItemData(data)
                     }} />
                     <Popconfirm
-                        title={t("Delete category")}
+                        title={t("Delete")}
                         description={t("Are you sure to delete?")}
                         onConfirm={() => useDelete(get(data,'id'))}
                         okText={t("Yes")}
@@ -139,7 +139,7 @@ const BranchContainer = () => {
                         type={"primary"}
                         onClick={() => setIsCreateModalOpen(true)}
                     >
-                        {t("New branch")}
+                        {t("New")}
                     </Button>
                 </Space>
                 <Table

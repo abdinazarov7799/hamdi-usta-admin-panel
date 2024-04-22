@@ -115,7 +115,7 @@ const ProductsContainer = () => {
                         setItemData(data)
                     }} />
                     <Popconfirm
-                        title={t("Delete product")}
+                        title={t("Delete")}
                         description={t("Are you sure to delete?")}
                         onConfirm={() => useDelete(get(data,'id'))}
                         okText={t("Yes")}

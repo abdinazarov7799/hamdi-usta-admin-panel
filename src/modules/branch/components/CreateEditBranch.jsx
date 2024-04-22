@@ -29,10 +29,13 @@ const CreateEditCategory = ({itemData,setIsModalOpen,refetch}) => {
             nameRu: get(itemData,'nameRu'),
             addressUz: get(itemData,'addressUz'),
             addressRu: get(itemData,'addressRu'),
-            closesAfterMn: get(itemData,'closesAfterMn'),
             lat: get(itemData,'lat'),
             lon: get(itemData,'lon'),
         });
+        setIsActive(get(itemData,'active',true));
+        setIsClosesAfterMn(get(itemData,'closesAfterMn',true));
+        setOpeningTime(get(itemData,'openingTime',true));
+        setClosingTime(get(itemData,'closingTime',true));
     }, [itemData]);
     const onFinish = (values) => {
         const formData = {

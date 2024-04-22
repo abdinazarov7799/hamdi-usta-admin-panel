@@ -48,7 +48,8 @@ const CreateEditProduct = ({itemData,setIsModalOpen,refetch}) => {
             number: get(itemData,'number'),
             categoryId: get(itemData,'category.id'),
         });
-        setImgUrl(get(itemData,'imageUrl'))
+        setImgUrl(get(itemData,'imageUrl'));
+        setIsActive(get(itemData,'active',true));
     }, [itemData]);
     const onFinish = (values) => {
         const formData = {
