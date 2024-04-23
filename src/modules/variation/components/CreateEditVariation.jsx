@@ -3,7 +3,7 @@ import {useTranslation} from "react-i18next";
 import usePostQuery from "../../../hooks/api/usePostQuery.js";
 import {KEYS} from "../../../constants/key.js";
 import {URLS} from "../../../constants/url.js";
-import {Button, Form, Input, InputNumber, Select, Space} from "antd";
+import {Button, Checkbox, Form, Input, InputNumber, Select, Space} from "antd";
 import {get} from "lodash";
 import usePutQuery from "../../../hooks/api/usePutQuery.js";
 import useGetAllQuery from "../../../hooks/api/useGetAllQuery.js";
@@ -13,6 +13,7 @@ const CreateEditVariation = ({itemData,setIsModalOpen,refetch}) => {
     const [form] = Form.useForm();
     const [searchProduct, setSearchProduct] = useState(null);
     const [searchMeasure, setSearchMeasure] = useState(null);
+    const [isActive, setIsActive] = useState(get(itemData,'active',true));
     const { mutate, isLoading } = usePostQuery({
         listKeyId: KEYS.variation_get_all,
     });
@@ -51,6 +52,7 @@ const CreateEditVariation = ({itemData,setIsModalOpen,refetch}) => {
             productId: get(itemData,'product.id'),
             measureUnitId: get(itemData,'measureUnit.id'),
         });
+        setIsActive(get(itemData,'active',true));
     }, [itemData]);
     const onFinish = (values) => {
         const formData = {
@@ -169,6 +171,13 @@ const CreateEditVariation = ({itemData,setIsModalOpen,refetch}) => {
                     rules={[{required: true,}]}
                 >
                     <InputNumber style={{width: "100%"}}/>
+                </Form.Item>
+
+                <Form.Item
+                    name="active"
+                    valuePropName="active"
+                >
+                    <Checkbox checked={isActive} onChange={(e) => setIsActive(e.target.checked)}>{t("is Active")} ?</Checkbox>
                 </Form.Item>
 
                 <Form.Item>

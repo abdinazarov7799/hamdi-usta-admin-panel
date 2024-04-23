@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Container from "../../../components/Container.jsx";
-import {Button, Input, Modal, Pagination, Popconfirm, Row, Space, Table} from "antd";
-import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
+import {Button, Input, Modal, Pagination, Row, Space, Switch, Table} from "antd";
+import {EditOutlined, PlusOutlined} from "@ant-design/icons";
 import {useTranslation} from "react-i18next";
 import usePaginateQuery from "../../../hooks/api/usePaginateQuery.js";
 import {KEYS} from "../../../constants/key.js";
@@ -29,16 +29,7 @@ const VariationContainer = () => {
         },
         page
     });
-    const { mutate } = useDeleteQuery({
-        listKeyId: KEYS.variation_get_all
-    });
-    const useDelete = (id) => {
-        mutate({url: `${URLS.variation_delete}/${id}`},{
-            onSuccess: () => {
-                refetch();
-            }
-        })
-    }
+
     const columns = [
         {
             title: t("ID"),
@@ -89,26 +80,23 @@ const VariationContainer = () => {
             }
         },
         {
-            title: t("Edit / Delete"),
+            title: t("is active"),
+            dataIndex: "active",
+            key: "active",
+            render: (props,data,index) => (
+                <Switch disabled checked={get(data,'active')} />
+            )
+        },
+        {
+            title: t("Edit"),
             width: 120,
             fixed: 'right',
             key: "action",
             render: (props, data, index) => (
-                <Space key={index}>
-                    <Button icon={<EditOutlined />} onClick={() => {
-                        setIsEditModalOpen(true)
-                        setItemData(data)
-                    }} />
-                    <Popconfirm
-                        title={t("Delete")}
-                        description={t("Are you sure to delete?")}
-                        onConfirm={() => useDelete(get(data,'id'))}
-                        okText={t("Yes")}
-                        cancelText={t("No")}
-                    >
-                        <Button danger icon={<DeleteOutlined />}/>
-                    </Popconfirm>
-                </Space>
+                <Button icon={<EditOutlined />} onClick={() => {
+                    setIsEditModalOpen(true)
+                    setItemData(data)
+                }} />
             )
         }
     ]
