@@ -57,6 +57,7 @@ const CreateEditVariation = ({itemData,setIsModalOpen,refetch}) => {
     const onFinish = (values) => {
         const formData = {
             ...values,
+            active: isActive
         }
         if (itemData) {
             mutateEdit(
