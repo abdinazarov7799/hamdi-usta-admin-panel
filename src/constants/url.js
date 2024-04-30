@@ -37,4 +37,5 @@ export const URLS = {
     users_get_all: "/api/users/get-all",
     users_ban: "/api/users/ban",
     users_unban: "/api/users/unban",
+    users_admin: "/api/users/admin",
 };

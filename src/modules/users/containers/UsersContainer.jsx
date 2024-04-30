@@ -28,6 +28,9 @@ const UsersContainer = () => {
     const {mutate: mutateBan} = usePutQuery({
         listKeyId: KEYS.users_get_all
     })
+    const {mutate: mutateAdmin, isLoading: isLoadingAdmin} = usePutQuery({
+        listKeyId: KEYS.users_get_all
+    })
     const {mutate: mutateUnBan} = usePutQuery({
         listKeyId: KEYS.users_get_all
     })
@@ -40,6 +43,15 @@ const UsersContainer = () => {
     }
     const useUnBan = (id) => {
         mutateUnBan({url: `${URLS.users_unban}/${id}`},{
+            onSuccess: () => {
+                refetch();
+            }
+        })
+    }
+    const useChangeAdmin = (id,admin) => {
+        mutateAdmin({
+            url: `${URLS.users_admin}/${id}?admin=${admin}`,
+        },{
             onSuccess: () => {
                 refetch();
             }
@@ -92,7 +104,11 @@ const UsersContainer = () => {
             dataIndex: "admin",
             key: "admin",
             render: (props,data,index) => (
-                <Switch disabled checked={get(data,'admin')} />
+                <Switch
+                    onChange={(e) => useChangeAdmin(get(data,'id'),e)}
+                    checked={get(data,'admin')}
+                    loading={isLoadingAdmin}
+                />
             )
         },
         {

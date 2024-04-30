@@ -3,7 +3,7 @@ import {useTranslation} from "react-i18next";
 import usePostQuery from "../../../hooks/api/usePostQuery.js";
 import {KEYS} from "../../../constants/key.js";
 import {URLS} from "../../../constants/url.js";
-import {Button, Checkbox, Col, DatePicker, Form, Input, Row, Space} from "antd";
+import {Button, Checkbox, Col, DatePicker, Form, Input, InputNumber, Row} from "antd";
 import {get} from "lodash";
 import usePutQuery from "../../../hooks/api/usePutQuery.js";
 const { TextArea } = Input;
@@ -146,7 +146,7 @@ const CreateEditCategory = ({itemData,setIsModalOpen,refetch}) => {
                             name="lat"
                             rules={[{required: true,}]}
                         >
-                            <Input />
+                            <InputNumber  style={{width: "100%"}} controls={false}/>
                         </Form.Item>
                     </Col>
                     <Col span={11}>
@@ -155,7 +155,7 @@ const CreateEditCategory = ({itemData,setIsModalOpen,refetch}) => {
                             name="lon"
                             rules={[{required: true,}]}
                         >
-                            <Input />
+                            <InputNumber style={{width: "100%"}} controls={false}/>
                         </Form.Item>
                     </Col>
                 </Row>
