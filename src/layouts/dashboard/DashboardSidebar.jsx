@@ -40,6 +40,10 @@ const DashboardSidebar = () => {
             key: "/variations",
         },
         {
+            label: t("Tickets"),
+            key: "/tickets",
+        },
+        {
             label: t("Constants"),
             key: "/constants",
         },

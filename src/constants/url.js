@@ -38,4 +38,5 @@ export const URLS = {
     users_ban: "/api/users/ban",
     users_unban: "/api/users/unban",
     users_admin: "/api/users/admin",
+    ticket_get_all: '/api/ticket/get-all',
 };

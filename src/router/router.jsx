@@ -1,7 +1,5 @@
 import React, {Suspense} from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import dayjs from "dayjs";
-
 
 // LAYOUTS
 import DashboardLayout from "../layouts/dashboard/DashboardLayout.jsx";
@@ -29,10 +27,11 @@ import MeasurePage from "../modules/measure/pages/MeasurePage.jsx";
 import VariationPage from "../modules/variation/pages/VariationPage.jsx";
 import BranchPage from "../modules/branch/pages/BranchPage.jsx";
 import UsersPage from "../modules/users/pages/UsersPage.jsx";
+import TicketsPage from "../modules/tickets/pages/TicketsPage.jsx";
 // PAGES
 
 
-const Router = ({ ...rest }) => {
+const Router = () => {
   return (
     <BrowserRouter>
       <Suspense fallback={<OverlayLoader />}>
@@ -70,6 +69,10 @@ const Router = ({ ...rest }) => {
               <Route
                   path={"/branches"}
                   element={<BranchPage />}
+              />
+              <Route
+                  path={"/tickets"}
+                  element={<TicketsPage />}
               />
               <Route
                   path={"/translations"}
