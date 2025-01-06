@@ -28,6 +28,7 @@ import VariationPage from "../modules/variation/pages/VariationPage.jsx";
 import BranchPage from "../modules/branch/pages/BranchPage.jsx";
 import UsersPage from "../modules/users/pages/UsersPage.jsx";
 import TicketsPage from "../modules/tickets/pages/TicketsPage.jsx";
+import StatisticsPage from "../modules/statistics/pages/StatisticsPage.jsx";
 // PAGES
 
 
@@ -73,6 +74,10 @@ const Router = () => {
               <Route
                   path={"/tickets"}
                   element={<TicketsPage />}
+              />
+              <Route
+                  path={"/statistics"}
+                  element={<StatisticsPage />}
               />
               <Route
                   path={"/translations"}

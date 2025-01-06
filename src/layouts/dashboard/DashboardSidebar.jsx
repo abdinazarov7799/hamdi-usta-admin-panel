@@ -48,6 +48,10 @@ const DashboardSidebar = () => {
             key: "/constants",
         },
         {
+            label: t("Statistics"),
+            key: "/statistics",
+        },
+        {
             label: t("Translations"),
             key: "/translations",
         },
