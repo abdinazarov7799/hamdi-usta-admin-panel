@@ -144,6 +144,10 @@ const StatisticsContainer = () => {
                         }}
                         picker={period}
                         allowClear={false}
+                        disabledDate={(current) => {
+                            let customDate = dayjs().format("YYYY-MM-DD");
+                            return current && current > dayjs(customDate, "YYYY-MM-DD");
+                        }}
                     />
                 </Row>
             </Container>
