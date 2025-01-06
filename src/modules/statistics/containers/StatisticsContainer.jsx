@@ -72,6 +72,11 @@ const StatisticsContainer = () => {
         xaxis: {
             categories: chartData.dates
         },
+        dataLabels: {
+            formatter: function (val) {
+                return Intl.NumberFormat('en-US').format(val)
+            },
+        },
         theme: {
             mode: isDarkMode ? 'dark' : 'light'
         },
@@ -80,6 +85,11 @@ const StatisticsContainer = () => {
     const totalSumChartOptions = {
         chart: {
             type: 'bar'
+        },
+        dataLabels: {
+            formatter: function (val) {
+                return Intl.NumberFormat('en-US').format(val)
+            },
         },
         xaxis: {
             categories: chartData.dates
