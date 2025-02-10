@@ -5,11 +5,13 @@ import {URLS} from "../../../constants/url.js";
 import dayjs from "dayjs";
 import config from "../../../config.js";
 import Container from "../../../components/Container.jsx";
-import {Col, DatePicker, Row, Select, Space, Spin, Statistic, Typography} from "antd";
+import {Button, Col, DatePicker, Row, Select, Space, Spin, Statistic, Typography} from "antd";
 import {useTranslation} from "react-i18next";
 import Chart from "react-apexcharts";
-import {get, isEqual} from "lodash";
+import {get, isEmpty, isEqual} from "lodash";
 import {useSettingsStore} from "../../../store/index.js";
+import exportToExcel from "../components/exportToExcel.js";
+import {request} from "../../../services/api/index.js";
 const {Title} = Typography;
 const {RangePicker} = DatePicker;
 
@@ -21,6 +23,7 @@ const StatisticsContainer = () => {
     const [period,setPeriod] = useState(config.PERIOD.DAY);
     const [branchId,setBranchId] = useState(null);
     const [paymentProviderId, setPaymentProviderId] = useState(null);
+    const [isLoadingReport, setIsLoadingReport] = useState(false);
 
     const {data,isLoading,isFetching,refetch} = useGetAllQuery({
         key: KEYS.order_info,
@@ -65,9 +68,9 @@ const StatisticsContainer = () => {
         }
     }, [data]);
 
-    const orderCountChartOptions = {
+    const options = {
         chart: {
-            type: 'bar',
+            type: 'bar'
         },
         xaxis: {
             categories: chartData.dates
@@ -82,22 +85,23 @@ const StatisticsContainer = () => {
         },
     };
 
-    const totalSumChartOptions = {
-        chart: {
-            type: 'bar'
-        },
-        dataLabels: {
-            formatter: function (val) {
-                return Intl.NumberFormat('en-US').format(val)
-            },
-        },
-        xaxis: {
-            categories: chartData.dates
-        },
-        theme: {
-            mode: isDarkMode ? 'dark' : 'light'
-        },
-    };
+    const handleExport = async () => {
+        setIsLoadingReport(true);
+        const response = await request.get('/api/order/get',{
+            params: {
+                from,
+                to,
+                period,
+                branchId,
+                paymentProviderId
+            }
+        })
+        setIsLoadingReport(false);
+
+        if (!isEmpty(get(response,'data.data',[]))) {
+            exportToExcel(get(response,'data.data',[]),`${t("Orders")}_${from}_${to}`);
+        }
+    }
 
     return (
         <Space direction={"vertical"} size={"middle"} style={{width: "100%"}}>
@@ -159,6 +163,9 @@ const StatisticsContainer = () => {
                             return current && current > dayjs(customDate, "YYYY-MM-DD");
                         }}
                     />
+                    <Button type={"primary"} onClick={handleExport} loading={isLoadingReport}>
+                        {t("Dowload excel")}
+                    </Button>
                 </Row>
             </Container>
             <Container>
@@ -184,7 +191,7 @@ const StatisticsContainer = () => {
                     <Title level={4}>{t("Total order count")}: {from} - {to}</Title>
                     <Spin spinning={isLoading || isFetching}>
                         <Chart
-                            options={orderCountChartOptions}
+                            options={options}
                             series={[{ name: t("Order Count"), data: chartData.orderCounts }]}
                             type="bar"
                             height={500}
@@ -197,7 +204,7 @@ const StatisticsContainer = () => {
                     <Title level={4}>{t("Total order sum")}: {from} - {to}</Title>
                     <Spin spinning={isLoading || isFetching}>
                         <Chart
-                            options={totalSumChartOptions}
+                            options={options}
                             series={[{ name: t("Total Sum"), data: chartData.totalSums }]}
                             type="bar"
                             height={500}
