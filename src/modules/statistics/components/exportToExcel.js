@@ -10,7 +10,7 @@ const formatNumber = (num) => {
 const exportToExcel = (data, fileName) => {
     const formattedData = data.map(order => ({
         "Номер заказа": get(order, 'id', ''),
-        "Дата": dayjs.unix(get(order, 'created_at', 0)).format("DD-MM-YYYY"),
+        "Дата": dayjs(get(order, 'created_at')).format("DD-MM-YYYY"),
         "Сумма": formatNumber(get(order, 'total_price', '')),
         "Способ оплаты": get(order, 'payment_provider', ''),
         "За доставку": formatNumber(get(order, 'delivery_price', '')),
