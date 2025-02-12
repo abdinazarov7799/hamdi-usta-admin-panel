@@ -27,7 +27,7 @@ const exportToExcel = (data, fileName) => {
 
     ws['!cols'] = [
         {wch: 15}, // Номер заказа
-        {wch: 12}, // Дата
+        {wch: 20}, // Дата
         {wch: 15}, // Сумма
         {wch: 15}, // Способ оплаты
         {wch: 12}, // За доставку
